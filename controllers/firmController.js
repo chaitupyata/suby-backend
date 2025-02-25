@@ -1,11 +1,12 @@
 const Firm = require('../models/Firm.model.js');
 const Vendor = require('../models/Vendor.model.js');
 const multer = require('multer')
+const path = require('path')
 
 // multer file uploade 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uplode/');
+        cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + path.extname(file.originalname));

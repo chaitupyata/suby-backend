@@ -6,7 +6,6 @@ const vendorRoutes = require('./routes/vendorRoutes.js');
 const firmRoutes = require("./routes/firmRoutes.js");
 const productRoutes = require('./routes/productRoutes.js');
 const cors = require('cors');
-const path = require('path');
 
 
 
