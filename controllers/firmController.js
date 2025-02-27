@@ -36,13 +36,15 @@ const addFirm = async(req, res) => {
 
         const savedFirm = await firm.save();
 
+        const firmId = savedFirm._id
+
         
 // papulatind firm to vendor in DB `
         vendor.firm.push(savedFirm)
 
         const savedFRIM = await vendor.save()
         
-        return res.status(200).json({ message: "Firm added succesfully"})
+        return res.status(200).json({ message: "Firm added succesfully", firmId})
 
     } catch (error) {
         console.error(error)

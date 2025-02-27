@@ -5,6 +5,8 @@ const productController = require('../controllers/productController.js');
 const router = express.Router();
 
 router.post('/add-product/:firmId', productController.addProduct);
+// /product/add-product/:firmId
+
 
 router.get('/:firmId/products', productController.getProductByFirm);
 
