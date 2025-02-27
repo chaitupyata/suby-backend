@@ -28,6 +28,10 @@ const addFirm = async(req, res) => {
         if (!vendor) {
             res.status(404).json({mesage: "Vendor is not found"})
         }
+
+        if (vendor.firm.length > 0 ) {
+            return res.status(400).json({message: "vendor can have only one firm..."})
+        }
     
         const firm = new Firm({
             firmName, area, category, region, offer, image, vendor: vendor._id    
@@ -39,10 +43,13 @@ const addFirm = async(req, res) => {
         const firmId = savedFirm._id
 
         
-// papulatind firm to vendor in DB `
+        // papulatind firm to vendor in DB `
+
         vendor.firm.push(savedFirm)
 
-        const savedFRIM = await vendor.save()
+        await vendor.save()
+
+
         
         return res.status(200).json({ message: "Firm added succesfully", firmId})
 
@@ -60,7 +67,7 @@ const deleteFirmById =async(req, res) => {
         const deleteFirm = await Firm.findById(firmId);
 
         if(!deleteFirm){
-            console.error(error);
+            // console.error(error);
             return res.status(404).json({error: "no Firm found to delete "})
         }
     } catch (error) {

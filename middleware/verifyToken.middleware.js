@@ -16,11 +16,9 @@ const verifyTokenMiddleware = async(req, res, next) => {
     try {
         const decoded = jwt.verify(token, secretKey)
 
-        console.log(decoded)
 
         const vendorID  = await Vender.findById(decoded.venderId) 
 
-        console.log(vendorID);
         
 
         if(!vendorID){

@@ -73,11 +73,12 @@ const vendorLogin = async(req, res ) => {
 
         const token = jwt.sign({venderId: vendor._id}, secretKey, {expiresIn: "1h"})
 
+        const vendorId = vendor._id;
+
 
         res.status(200)
-        .json({success: "vendor logged succesfully...  ","jwtToken": token})
+        .json({success: "vendor logged succesfully...","jwtToken": token, vendorId})
 
-        console.log("EMAIL :", email, "jwtToken:", token)
     } catch (error) {
         console.error(error)
         res.status(500).json({error: "Internal Server error while logging the vendor "})
@@ -91,8 +92,7 @@ const getAllVendors = async(req, res) => {
         const vendors = await Vendor.find().populate('firm');
 
         // console.log(vendors);
-        
-
+    
         res.json({vendors});
 
     } catch (error) {
@@ -111,10 +111,15 @@ const getVendorById = async(req, res) => {
     try {
         const vendor = await Vendor.findById(vendorId).populate('firm');
 
+        
+
         if (!vendor) {
             return res.status(404).json({error: "Error while getting single vendor details fron DB"})
         }
-        res.status(200).json({vendor})
+        const vendorFirmId = vendor.firm[0]._id
+        res.status(200).json({vendorFirmId, vendorId})
+
+        
 
     } catch (error) {
         console.error(error)

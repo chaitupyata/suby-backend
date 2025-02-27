@@ -1,7 +1,6 @@
 const express = require("express");
 const firmController = require('../controllers/firmController.js');
 const verifyTokenMiddleware = require('../middleware/verifyToken.middleware.js');
-const { rawListeners } = require("../models/Firm.model.js");
 
 
 const router = express.Router()
