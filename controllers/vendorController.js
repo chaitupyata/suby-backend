@@ -6,11 +6,11 @@ const Vendor = require("../models/Vendor.model.js");
 
 dotEnv.config();
 
-const secretKey = process.env.SECRETE_KEY
+const secretKey = process.env.SECRETE_KEY;
 
 const vendorRegister = async(req, res) => {
     // get the details form body
-    const {username, email, password} = req.body
+    const {username, email, password} = req.body;
 
     // token based authentication
 
@@ -25,12 +25,12 @@ const vendorRegister = async(req, res) => {
         if(vendorEmail){
             console.log("Email is already taken... try another")
 
-            return res.status(400).json("Email is alredy taken....")
+            return res.status(400).json("Email is alredy taken....");
         }
 
         // Next hash the password user nuchi vachhedhi 
 
-        const hashedPassword = await bcrypt.hash(password, 10)
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         // e values ni oka instance ni create chesi DB lo store cheyyali
 
@@ -40,19 +40,19 @@ const vendorRegister = async(req, res) => {
             password: hashedPassword
         });
 
-        await newVendor.save()
+        await newVendor.save();
 
-        res.status(201).json({message : "Vendor registered successfully "})
+        res.status(201).json({message : "Vendor registered successfully "});
 
-        console.log('vender registered succesfully....')
+        console.log('Vender registered succesfully....');
 
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({error: "Internal Server error while registering the vendor "})
+        res.status(500).json({error: "Internal Server error while registering the vendor "});
         
     }
-}
+};
 
 // Vendor Login
 
@@ -77,19 +77,48 @@ const vendorLogin = async(req, res ) => {
 
 
         res.status(200)
-        .json({success: "vendor logged succesfully...","jwtToken": token, vendorId})
+        .json({success: "vendor logged succesfully...","jwtToken": token, vendorId});
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({error: "Internal Server error while logging the vendor "})
+        res.status(500).json({error: "Internal Server error while logging the vendor "});
         
     }
     // crate a route for this 
-}
+};
 
+const getVendorById = async(req, res) => {
+    const vendorId = req.params.id;
+
+    try {
+        const vendor = await Vendor.findById(vendorId).populate('firm');
+        if (!vendor) {
+            return res.status(404).json({ error: "Vendor not found" });
+        }
+        console.log("vendor =>=====>", vendor)
+        
+        const vendorFirmId = vendor.firm[0]._id;
+        const vendorFirmName = vendor.firm[0].firmName;
+
+
+        res.status(200).json({ vendorId, vendorFirmId, vendor, vendorFirmName })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Internal server error while getting the Single vendor details from DB !!!" });
+    }
+};
+
+
+
+const getAllVendors = async(_, res) => {
+    
     try {
         const vendors = await Vendor.find().populate('firm');
 
+        if(!vendors){
+            console.error(error)
+            res.status(500).json({error: "Internal Server error while getting the details of vendor from firm "})
+        }
         // console.log(vendors);
     
         res.json({vendors});
@@ -98,39 +127,10 @@ const vendorLogin = async(req, res ) => {
         console.error(error)
         res.status(500).json({error: "Internal Server error while getting the details of vendor from firm "})
     }
-}
+};
 
 
-// getting single vendor details by using ids 
-
-const getVendorById = async(req, res) => {
-
-    const vendorId = req.params.id;
-
-    try {
-        const vendor = await Vendor.findById(vendorId).populate('firm');
-
-        
-
-        if (!vendor) {
-            return res.status(404).json({error: "Error while getting single vendor details fron DB"})
-        }
-        const vendorFirmId = vendor.firm[0]._id
-        res.status(200).json({vendorFirmId, vendorId})
-
-        
-
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({error: "Internal Server error while getting the details of single vendor from DB "})
-    
-    }
-
-}
-
-
-module.exports = {vendorRegister, vendorLogin, getAllVendors, getVendorById }
-
+module.exports = {vendorRegister, vendorLogin, getAllVendors, getVendorById}
 
 
 
