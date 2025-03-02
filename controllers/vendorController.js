@@ -87,7 +87,6 @@ const vendorLogin = async(req, res ) => {
     // crate a route for this 
 }
 
-const getAllVendors = async(req, res) => {
     try {
         const vendors = await Vendor.find().populate('firm');
 
