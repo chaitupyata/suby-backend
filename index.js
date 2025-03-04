@@ -39,7 +39,7 @@ app.listen(PORT, () => {
     console.log(`server started running at ${PORT}`);
 })
 
-app.use('/home', (req, res) => {
+app.use('/', (req, res) => {
     res.send("<h1> Welcome to suby </h1>")
 })
 // Step 2 Connceting to DB
