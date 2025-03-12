@@ -15,6 +15,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+
 dotEnv.config();
 
 mongoose.connect(process.env.MONGO_URI)
@@ -40,7 +41,7 @@ app.listen(PORT, () => {
 })
 
 app.use('/', (req, res) => {
-    res.send("<h1> Welcome to suby </h1>")
+    res.send("<h1> Welcome to sub1y </h1>")
 })
 // Step 2 Connceting to DB
 // Api Creation Models , controllers , Routes
