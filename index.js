@@ -41,7 +41,7 @@ app.listen(PORT, () => {
 })
 
 app.use('/', (req, res) => {
-    res.send("<h1> Welcome to sub1y </h1>")
+    res.send("<h1> Welcome to suby </h1>")
 })
 // Step 2 Connceting to DB
 // Api Creation Models , controllers , Routes
