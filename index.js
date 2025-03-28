@@ -9,14 +9,12 @@ const cors = require('cors');
 
 
 
-
-
-
 const app = express();
 const PORT = process.env.PORT || 4000;
 
 
 dotEnv.config();
+app.use(cors())
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB connected Successfully!"))
@@ -25,8 +23,6 @@ mongoose.connect(process.env.MONGO_URI)
 // step6 : input filed lo vasthunna data ni json loki parse cheyyali (body-parser dwara) 
 
 app.use(bodyParser.json());
-app.use(cors());
-
 
 // step5
 
