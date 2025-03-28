@@ -1,3 +1,4 @@
+
 const Vender = require('../models/Vendor.model.js')
 const jwt = require('jsonwebtoken');
 const dotEnv = require('dotenv');
@@ -5,7 +6,6 @@ const dotEnv = require('dotenv');
 dotEnv.config();
 
 const secretKey = process.env.SECRETE_KEY
-
 
 const verifyTokenMiddleware = async(req, res, next) => {
     const token = req.headers.token;
@@ -16,10 +16,7 @@ const verifyTokenMiddleware = async(req, res, next) => {
     try {
         const decoded = jwt.verify(token, secretKey)
 
-
         const vendorID  = await Vender.findById(decoded.venderId) 
-
-        
 
         if(!vendorID){
             return res.status(404).json({error: "Vendor is not found in DB"})

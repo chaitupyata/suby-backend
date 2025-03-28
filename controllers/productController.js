@@ -1,3 +1,4 @@
+
 const Firm = require("../models/Firm.model.js");
 const Product = require("../models/Product.model.js");
 const multer = require('multer');
@@ -69,8 +70,6 @@ const getProductByFirm = async(req, res) => {
 
         const firmId = req.params.firmId;
 
-        
-
         const firm = await Firm.findById(firmId);
 
         if(!firm){
@@ -80,15 +79,11 @@ const getProductByFirm = async(req, res) => {
 
         const restaurentName = firm.firmName; 
         
-        
+        const products = await Product.find({firm: firmId});
 
-        const product = await Product.find({firm: firmId});
+        res.status(200).json({ restaurentName ,products });
 
-        res.status(200).json({ restaurentName ,product});
-
-        
-
-    } catch (error) {
+        } catch (error) {
         console.error(error);
         res.status(500).json({error: "Internal Server error while adding the product to firm"})
     }

@@ -1,6 +1,10 @@
+
+
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const dotEnv = require('dotenv');
+
 
 const Vendor = require("../models/Vendor.model.js");
 
@@ -9,16 +13,14 @@ dotEnv.config();
 const secretKey = process.env.SECRETE_KEY;
 
 const vendorRegister = async(req, res) => {
-    // get the details form body
     const {username, email, password} = req.body;
 
-    // token based authentication
 
     try {
         // by using the email which is come fom req.body 
         // Vendor model lo vunna email ni BD call chesi danni store chesthamu 
 
-        const vendorEmail = await Vendor.findOne({email});
+        const vendorEmail = await Vendor.findOne({ email });
 
         // check if the vendor Email is prasent or not
 
@@ -60,7 +62,7 @@ const vendorLogin = async(req, res ) => {
     const {email, password} = req.body
     try {
         // getting the email from DB using VENDOR model
-        const vendor = await Vendor.findOne({email});
+        const vendor = await Vendor.findOne({ email });
 
         // vendor lo vunna password manam icchina password both correct vunnaya leva ani check chesthunnamu 
 
@@ -110,18 +112,18 @@ const getVendorById = async(req, res) => {
 
 
 
-const getAllVendors = async(_, res) => {
+const getAllVendors = async(req, res) => {
     
     try {
         const vendors = await Vendor.find().populate('firm');
+        res.json({ vendors });
 
-        if(!vendors){
-            console.error(error)
-            res.status(500).json({error: "Internal Server error while getting the details of vendor from firm "})
-        }
+        // if(!vendors){
+        //     console.error(error)
+        //     res.status(500).json({error: "Internal Server error while getting the details of vendor from firm "})
+        // }
         // console.log(vendors);
     
-        res.json({vendors});
 
     } catch (error) {
         console.error(error)

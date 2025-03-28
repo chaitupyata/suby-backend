@@ -1,3 +1,4 @@
+
 const dotEnv = require("dotenv");
 const express = require("express");
 const mongoose = require('mongoose');
@@ -6,8 +7,7 @@ const vendorRoutes = require('./routes/vendorRoutes.js');
 const firmRoutes = require("./routes/firmRoutes.js");
 const productRoutes = require('./routes/productRoutes.js');
 const cors = require('cors');
-
-
+const path = require('path')
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -37,7 +37,7 @@ app.listen(PORT, () => {
 })
 
 app.use('/', (req, res) => {
-    res.send("<h1> Welcome to suby </h1>")
+    res.send("<h1> Welcome to SUBY </h1>")
 })
 // Step 2 Connceting to DB
 // Api Creation Models , controllers , Routes

@@ -1,3 +1,4 @@
+
 const Firm = require('../models/Firm.model.js');
 const Vendor = require('../models/Vendor.model.js');
 const multer = require('multer')
@@ -22,9 +23,18 @@ const addFirm = async(req, res) => {
     try {
         const { firmName, area, category, region, offer } = req.body;
 
+        console.log("----> ", req.body)
+
+
+
         const image = req.file ? req.file.filename : undefined;
 
+        console.log("----==> ", image)
+
+
         const vendor = await Vendor.findById(req.vendorId);
+
+        console.log("--***==> ", vendor)
 
         if (!vendor) {
             res.status(404).json({ message: "Vendor not found" })
@@ -57,7 +67,7 @@ const addFirm = async(req, res) => {
 
 
 
-        return res.status(200).json({ message: 'Firm Added successfully ', firmId, vendorFirmName,  });
+        return res.status(200).json({ message: 'Firm Added successfully ', firmId, vendorFirmName });
 
 
     } catch (error) {
@@ -70,11 +80,12 @@ const addFirm = async(req, res) => {
 const deleteFirmById = async(req, res) => {
     try {
         const firmId = req.params.firmId;
-        const deleteFirm = await Firm.findById(firmId);
+        
+        const deleteProduct = await Firm.findByIdAndDelete(firmId);
 
-        if(!deleteFirm){
+        if(!deleteProduct){
             // console.error(error);
-            return res.status(404).json({error: "no Firm found to delete "})
+            return res.status(404).json({ error: "No product found" })
         }
     } catch (error) {
         console.error(error);

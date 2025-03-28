@@ -18,7 +18,6 @@ const firmSchema = new mongoose.Schema({
                 enum: ['veg', 'non-veg']
             }
         ],
-        required: true
     },
     region: {
         type: [
@@ -27,7 +26,6 @@ const firmSchema = new mongoose.Schema({
                 enum: ['south-indian', 'north-indian', 'chinese', 'bakery']
             }
         ],
-        required: true
     },
     offer: {
         type: String
