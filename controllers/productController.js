@@ -5,15 +5,16 @@ const path = require('path')
 
 
 
+
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'uploads/');  // Ensure this is a valid string path
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/'); // Destination folder where the uploaded images will be stored
     },
-    filename: (req, file, cb) => {
-      const uniqueSuffix = Date.now(); // This is likely causing the issue
-      cb(null, uniqueSuffix + path.extname(file.originalname)); // Ensure filename is a string
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)); // Generating a unique filename
     }
 });
+
 
 
 const upload = multer({storage: storage});

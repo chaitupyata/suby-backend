@@ -5,12 +5,11 @@ const path = require('path')
 
 // multer file uploade 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/'); // Destination folder where the uploaded images will be stored
     },
-    filename: function (req, file, cb) {
-        console.log("FILE----", file)
-        cb(null, file.name);
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)); // Generating a unique filename
     }
 });
 
