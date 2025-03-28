@@ -10,6 +10,8 @@ const storage = multer.diskStorage({
     },
     filename: function(req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname)); // Generating a unique filename
+
+        
     }
 });
 
@@ -44,6 +46,8 @@ const addFirm = async(req, res) => {
 
         const savedFirm = await firm.save();
 
+        console.log("-> ", savedFirm)
+
         const firmId = savedFirm._id
         const vendorFirmName = savedFirm.firmName
 
@@ -53,7 +57,7 @@ const addFirm = async(req, res) => {
 
 
 
-        return res.status(200).json({ message: 'Firm Added successfully ', firmId, vendorFirmName });
+        return res.status(200).json({ message: 'Firm Added successfully ', firmId, vendorFirmName,  });
 
 
     } catch (error) {
