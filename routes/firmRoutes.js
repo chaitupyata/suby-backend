@@ -9,6 +9,8 @@ router.post('/add-firm', verifyTokenMiddleware, firmController.addFirm)
 
 router.get('/uploads/:imageName', (req, res) => {
     const imageName = req.params.imageName;
+    console.log("IMG NAME====", imageName)
+    
     res.header("Content-Type", "image/jpeg");
     res.sendFile(path.join(__dirname, '..', 'uploads', imageName));
 
