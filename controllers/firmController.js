@@ -23,18 +23,26 @@ const addFirm = async(req, res) => {
     try {
         const { firmName, area, category, region, offer } = req.body;
 
-        console.log("----> ", req.body)
+          // ✅ Convert category and region to arrays if they are strings
+    if (typeof category === "string") {
+        category = category.replace(/[\[\]']/g, "").split(",").map(item => item.trim());
+    }
+    if (typeof region === "string") {
+    region = region.replace(/[\[\]']/g, "").split(",").map(item => item.trim());
+    }
+
+        console.log("REQ BODY ", req.body)
 
 
 
         const image = req.file ? req.file.filename : undefined;
 
-        console.log("----==> ", image)
+        console.log("REQ IMAGE FORM ", image)
 
 
         const vendor = await Vendor.findById(req.vendorId);
 
-        console.log("--***==> ", vendor)
+        console.log("VENDOR  ", vendor)
 
         if (!vendor) {
             res.status(404).json({ message: "Vendor not found" })
@@ -56,11 +64,11 @@ const addFirm = async(req, res) => {
 
         const savedFirm = await firm.save();
 
-        console.log("-------=====-> ", savedFirm)
+        console.log("SAVED FIRM,,", savedFirm)
 
         const firmId = savedFirm._id
         const vendorFirmName = savedFirm.firmName
-        
+
 
         vendor.firm.push(savedFirm)
         await vendor.save()
