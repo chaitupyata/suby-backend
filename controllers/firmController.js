@@ -38,12 +38,9 @@ const addFirm = async(req, res) => {
 
         const image = req.file ? req.file.filename : undefined;
 
-        console.log("REQ IMAGE FORM ", image)
 
 
         const vendor = await Vendor.findById(req.vendorId);
-
-        console.log("VENDOR  ", vendor)
 
         if (!vendor) {
             res.status(404).json({ message: "Vendor not found" })
@@ -65,16 +62,20 @@ const addFirm = async(req, res) => {
 
         const savedFirm = await firm.save();
 
-        console.log("SAVED FIRM,,", savedFirm)
 
         const firmId = savedFirm._id
         const vendorFirmName = savedFirm.firmName
+        const firmImage = savedFirm.image
 
 
         vendor.firm.push(savedFirm)
+
         await vendor.save()
 
-        return res.status(200).json({ message: 'Firm Added successfully ', firmId, vendorFirmName });
+        console.log('V......', vendor)
+        console.log("Sf=F", savedFirm)
+    
+        return res.status(200).json({ message: 'Firm Added successfully ', firmId, vendorFirmName, firmImage});
     } catch (error) {
         console.error(error)
         res.status(500).json("intenal server error")

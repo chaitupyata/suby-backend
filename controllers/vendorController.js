@@ -46,7 +46,7 @@ const vendorRegister = async(req, res) => {
 
         res.status(201).json({message : "Vendor registered successfully "});
 
-        console.log('Vender registered succesfully....');
+        console.log('REGISTRATION SUCCESS....');
 
 
     } catch (error) {
@@ -76,11 +76,12 @@ const vendorLogin = async(req, res ) => {
         const token = jwt.sign({venderId: vendor._id}, secretKey, {expiresIn: "1h"})
 
         const vendorId = vendor._id;
-    
 
 
         res.status(200)
         .json({success: "vendor logged succesfully...","jwtToken": token, vendorId});
+
+        console.log('LOGIN SUCCESS...');
 
     } catch (error) {
         console.error(error)
@@ -106,8 +107,10 @@ const getVendorById = async(req, res) => {
 
         res.status(200).json({ vendorId, vendorFirmId, vendor, vendorFirmName })
     } catch (error) {
+        window.location.reload()
         console.log(error);
         res.status(500).json({ error: "Internal server error while getting the Single vendor details from DB !!!" });
+
     }
 };
 

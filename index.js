@@ -26,6 +26,8 @@ app.use(bodyParser.json());
 
 // step5
 
+// http::localhost:4000/vendor/
+
 app.use('/vendor', vendorRoutes);
 app.use('/firm', firmRoutes);
 app.use('/product', productRoutes);

@@ -29,9 +29,6 @@ const addProduct = async(req, res) => {
 
         const firm = await Firm.findById(firmId);
 
-
-
-
         if(!firm){
             return res.status(404).json({error: "No firm Found"})
 
@@ -46,17 +43,16 @@ const addProduct = async(req, res) => {
             firm: firm._id
         })
 
-
-
-        
-
         const savedProduct = await product.save();
 
         firm.products.push(savedProduct);
 
         await firm.save();
 
-        res.status(200).json({savedProduct: savedProduct})
+        console.log('SAVED...',savedProduct)
+
+        const productImage = firm.image
+        res.status(200).json({savedProduct: savedProduct, productImage})
 
     } catch (error) {
         console.error(error);
@@ -76,6 +72,7 @@ const getProductByFirm = async(req, res) => {
             return res.status(404).json({error: "No firm found"});
             
         }
+        
 
         const restaurentName = firm.firmName; 
         
