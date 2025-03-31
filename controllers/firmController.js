@@ -24,12 +24,13 @@ const addFirm = async(req, res) => {
         let { firmName, area, category, region, offer } = req.body;
 
           // ✅ Convert category and region to arrays if they are strings
-    if (typeof category === "string") {
-        category = category.replace(/[\[\]']/g, "").split(",").map(item => item.trim());
-    }
-    if (typeof region === "string") {
-    region = region.replace(/[\[\]']/g, "").split(",").map(item => item.trim());
-    }
+        if (typeof category === "string") {
+            category = JSON.parse(category);
+        }
+        if (typeof region === "string") {
+            region = JSON.parse(region);
+        }
+
 
         console.log("REQ BODY ", req.body)
 
