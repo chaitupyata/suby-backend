@@ -107,7 +107,6 @@ const getVendorById = async(req, res) => {
 
         res.status(200).json({ vendorId, vendorFirmId, vendor, vendorFirmName })
     } catch (error) {
-        window.location.reload()
         console.log(error);
         res.status(500).json({ error: "Internal server error while getting the Single vendor details from DB !!!" });
 
